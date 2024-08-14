@@ -11,7 +11,17 @@ const PlaceholderImage = require('./assets/images/background.png');
 
 export default function App() {
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [showAppOptions, setShowAppOptions] = useState(false);
+
+  const onReset = () => {
+    setShowAppOptions(false);
+  };
+  const onAddSticker = () => {
+
+  };
+  const onSaveImageAsync = async ()=>{
+
+  };
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -21,6 +31,8 @@ export default function App() {
 
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
+      setShowAppOptions(true);
+
     } else {
       alert('You did not select any image.');
     }
@@ -34,16 +46,34 @@ export default function App() {
          selectedImage={selectedImage}/>
          {/* <Image source={PlaceholderImage} style={styles.image}/> */}
       </View>
+      {showAppOptions ? (
+        <View style={styles.optionsContainer}>
+          <View style={styles.optionsRow}>
+            <IconButton icon="refresh" label="Reset" onPress={onReset} />
+            <CircleButton onPress={onAddSticker}/>
+            <IconButton icon="save-alt" label="Save" onPress={onSaveImageAsync}/>
+          </View>
+        </View>
+      ):(
       <View style={styles.footerContainer}>
         <Button theme="primary" label="Choose a photo" onPress={pickImageAsync} />
-        <Button label="Use this photo"/>
+        <Button label="Use this photo" onPress={() => setShowAppOptions(true)}/>
       </View>
+      )}
       <StatusBar style="auto"/>
     </View>
-  );
-}
+    );
+  }
 
 const styles = StyleSheet.create({
+  optionsContainer:{
+    position: 'absolute',
+    bottom: 80,
+  },
+  optionsRow:{
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   footerContainer:{
     flex: 1 / 3,
     alignItems: 'center',
