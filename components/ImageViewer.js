@@ -1,9 +1,9 @@
 import { StyleSheet, Image } from 'react-native';
 
 export default function ImageViewer({ placeholderImageSource, selectedImage }) {
-    const ImageSource = selectedImage ? { uri: selectedImage } : placeholderImageSource;
+    const imageSource = selectedImage ? { uri: selectedImage } : placeholderImageSource;
     
-    return <Image source={ImageSource} style={styles.image} />;
+    return <Image source={imageSource} style={styles.image} />;
 }
 
 const styles = StyleSheet.create({
@@ -13,3 +13,4 @@ const styles = StyleSheet.create({
         borderRadius: 18,
     },
 });
+

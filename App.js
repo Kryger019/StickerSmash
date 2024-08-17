@@ -1,24 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
 
-import Button from './components/button';
+import Button from './components/Button';
 import ImageViewer from './components/ImageViewer';
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
+import EmojiPicker from "./components/EmojiPicker";
 
 const PlaceholderImage = require('./assets/images/background.png');
 
 
 export default function App() {
+const [selectedImage, setSelectedImage] = useState(null);
+const [showAppOptions, setShowAppOptions] = useState(false);
+const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [showAppOptions, setShowAppOptions] = useState(false);
+  const onAddSticker = () => {
+    setIsModalVisible(true);
+  };
+  
+  const onModalClose = () =>{
+    setIsModalVisible(false);
+  };
 
   const onReset = () => {
     setShowAppOptions(false);
   };
-  const onAddSticker = () => {
-
-  };
+  
   const onSaveImageAsync = async ()=>{
 
   };
@@ -30,6 +38,7 @@ export default function App() {
     });
 
     if (!result.canceled) {
+      console.log(result);
       setSelectedImage(result.assets[0].uri);
       setShowAppOptions(true);
 
@@ -40,10 +49,13 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
+      </EmojiPicker>
       <View style={styles.imageContainer}>
         <ImageViewer
          placeholderImageSource={PlaceholderImage}
-         selectedImage={selectedImage}/>
+         selectedImage={selectedImage}
+         />
          {/* <Image source={PlaceholderImage} style={styles.image}/> */}
       </View>
       {showAppOptions ? (
