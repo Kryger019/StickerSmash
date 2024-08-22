@@ -5,7 +5,10 @@ import Button from './components/Button';
 import ImageViewer from './components/ImageViewer';
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
-import EmojiPicker from "./components/EmojiPicker";
+import EmojiPicker from './components/EmojiPicker';
+import EmojiList from './components/EmojiList';
+import EmojiSticker from './components/EmojiSticker';
+import IconButton from './components/IconButton';
 
 const PlaceholderImage = require('./assets/images/background.png');
 
@@ -14,6 +17,8 @@ export default function App() {
 const [selectedImage, setSelectedImage] = useState(null);
 const [showAppOptions, setShowAppOptions] = useState(false);
 const [isModalVisible, setIsModalVisible] = useState(false);
+const [pickedEmoji, setPickedEmoji] = useState(null);
+
 
   const onAddSticker = () => {
     setIsModalVisible(true);
@@ -50,19 +55,18 @@ const [isModalVisible, setIsModalVisible] = useState(false);
   return (
     <View style={styles.container}>
       <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
+        <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose}/>
       </EmojiPicker>
       <View style={styles.imageContainer}>
-        <ImageViewer
-         placeholderImageSource={PlaceholderImage}
-         selectedImage={selectedImage}
-         />
+        <ImageViewer placeholderImageSource={PlaceholderImage}selectedImage={selectedImage} />
+        {pickedEmoji && <EmojiSticker imageSize={40} stickerSource={pickedEmoji} /> }
          {/* <Image source={PlaceholderImage} style={styles.image}/> */}
       </View>
       {showAppOptions ? (
         <View style={styles.optionsContainer}>
           <View style={styles.optionsRow}>
             <IconButton icon="refresh" label="Reset" onPress={onReset} />
-            <CircleButton onPress={onAddSticker}/>
+            <circleButton onPress={onAddSticker}/>
             <IconButton icon="save-alt" label="Save" onPress={onSaveImageAsync}/>
           </View>
         </View>
