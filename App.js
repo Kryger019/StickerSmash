@@ -16,7 +16,7 @@ import EmojiPicker from "./components/EmojiPicker";
 import EmojiList from './components/EmojiList';
 import EmojiSticker from './components/EmojiSticker';
 
-const PlaceholderImage = require("./assets/images/background-image.png");
+const PlaceholderImage = require("./assets/images/background.png");
 
 export default function App() {
   const imageRef = useRef();
